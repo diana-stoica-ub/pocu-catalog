@@ -9,10 +9,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service            //this annotation means that this class is a Bean
 public class TeacherService {
 
-    public TeacherDto getTeacher() {
+    //service classes contain most of the business logic;
+
+    public TeacherDto getTeacher() { //dummy method that generates a test object; will be removed
         TeacherDto dto = new TeacherDto();
         dto.setFirstName("Ion");
         dto.setLastName("Popescu");

@@ -1,17 +1,24 @@
 package com.proiect.catalog.web;
 
 import com.proiect.catalog.converter.SubjectConverter;
+import com.proiect.catalog.exception.ControllerExceptionHandler;
 import com.proiect.catalog.model.Subject;
 import com.proiect.catalog.service.SubjectService;
 import com.proiect.catalog.web.dto.SubjectDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/subject")
 public class SubjectController {
+
+    private Logger logger = LoggerFactory.getLogger(SubjectController.class);
+
 
     private final SubjectService subjectService;
     private final SubjectConverter subjectConverter;
@@ -34,6 +41,28 @@ public class SubjectController {
         Subject subject = subjectService.getSubject(id); //subjectService.getSubject(id)  Alt + Enter ==> Subject subject = subjectService.getSubject(id)
 
         return subjectConverter.fromEntityToDto(subject);
+    }
+
+    @PostMapping(value = "")
+    public SubjectDto saveNewSubject(@RequestBody SubjectDto request) {
+        Subject subjectToBeSaved = subjectConverter.fromDtoToEntity(request);
+        Subject savedSubject = subjectService.saveSubject(subjectToBeSaved);
+
+        logger.info("Saved new subject {}", savedSubject);
+        return subjectConverter.fromEntityToDto(savedSubject);
+    }
+
+    @PutMapping(value = "/{id}")
+    public SubjectDto updateSubject(@PathVariable Long id, @RequestBody @Valid SubjectDto request) {
+        Subject subject = subjectConverter.fromDtoToEntity(request);
+        subject = subjectService.updateSubject(subject, id);
+
+        return subjectConverter.fromEntityToDto(subject);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteSubject(@PathVariable Long id) {
+        subjectService.deleteSubject(id);
     }
 
 

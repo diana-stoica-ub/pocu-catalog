@@ -1,5 +1,6 @@
 package com.proiect.catalog.service;
 
+import com.proiect.catalog.exception.NotFoundException;
 import com.proiect.catalog.model.Subject;
 import com.proiect.catalog.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,32 @@ public class SubjectService {
         if (optionalSubject.isPresent()) {
             return optionalSubject.get();
         } else {
-            throw new RuntimeException("Subject not found");
+            throw new NotFoundException("Subject not found", "subject.not.found");
         }
     }
 
-    public Subject saveSubject() {
-        return null;
+    public Subject saveSubject(Subject subjectToBeSaved) {
+        Subject savedSubject = subjectRepository.save(subjectToBeSaved);
+
+        return savedSubject;
+    }
+
+    public Subject updateSubject(Subject subjectToBeUpdated, Long id) {
+        Optional<Subject> subjectOptional = subjectRepository.findById(id);
+        if (subjectOptional.isPresent()) {
+            subjectToBeUpdated.setId(id);
+            return subjectRepository.save(subjectToBeUpdated);
+        } else {
+            throw new NotFoundException("Subject not found", "subject.not.found");
+        }
+    }
+
+    public void deleteSubject(Long id) {
+        Optional<Subject> subjectOptional = subjectRepository.findById(id);
+        if (subjectOptional.isPresent()) {
+            subjectRepository.deleteById(id);
+        } else {
+            throw new NotFoundException("Subject not found", "subject.not.found");
+        }
     }
 }

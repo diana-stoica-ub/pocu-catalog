@@ -29,4 +29,22 @@ public class SubjectConverter {
 
         return subjectDto;
     }
+
+    public List<Subject> fromDtosToEntities(List<SubjectDto> dtos) {
+        return dtos
+                .stream()
+                .map(this::fromDtoToEntity)
+                .collect(Collectors.toList());
+    }
+
+    public Subject fromDtoToEntity(SubjectDto dto) {
+        Subject entity = new Subject();
+        entity.setName(dto.getName());
+        entity.setCreditPoints(dto.getCreditPoints());
+        entity.setOptional(dto.getOptional());
+        entity.setCoursePercent(dto.getSubjectScoring().getCoursePercent());
+        entity.setSeminaryPercent(dto.getSubjectScoring().getSeminaryPercent());
+
+        return entity;
+    }
 }

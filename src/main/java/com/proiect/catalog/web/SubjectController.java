@@ -1,7 +1,6 @@
 package com.proiect.catalog.web;
 
 import com.proiect.catalog.converter.SubjectConverter;
-import com.proiect.catalog.exception.ControllerExceptionHandler;
 import com.proiect.catalog.model.Subject;
 import com.proiect.catalog.service.SubjectService;
 import com.proiect.catalog.web.dto.SubjectDto;
@@ -10,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -53,7 +51,7 @@ public class SubjectController {
     }
 
     @PutMapping(value = "/{id}")
-    public SubjectDto updateSubject(@PathVariable Long id, @RequestBody @Valid SubjectDto request) {
+    public SubjectDto updateSubject(@PathVariable Long id, @RequestBody  SubjectDto request) {
         Subject subject = subjectConverter.fromDtoToEntity(request);
         subject = subjectService.updateSubject(subject, id);
 

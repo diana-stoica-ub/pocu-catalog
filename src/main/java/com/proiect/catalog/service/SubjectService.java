@@ -1,5 +1,6 @@
 package com.proiect.catalog.service;
 
+import com.proiect.catalog.exception.BadRequestException;
 import com.proiect.catalog.exception.NotFoundException;
 import com.proiect.catalog.model.Subject;
 import com.proiect.catalog.repository.SubjectRepository;
@@ -33,12 +34,13 @@ public class SubjectService {
     }
 
     public Subject saveSubject(Subject subjectToBeSaved) {
-        Subject savedSubject = subjectRepository.save(subjectToBeSaved);
+        validateSubject(subjectToBeSaved);
 
-        return savedSubject;
+        return subjectRepository.save(subjectToBeSaved);
     }
 
     public Subject updateSubject(Subject subjectToBeUpdated, Long id) {
+        validateSubject(subjectToBeUpdated);
         Optional<Subject> subjectOptional = subjectRepository.findById(id);
         if (subjectOptional.isPresent()) {
             subjectToBeUpdated.setId(id);
@@ -54,6 +56,12 @@ public class SubjectService {
             subjectRepository.deleteById(id);
         } else {
             throw new NotFoundException("Subject not found", "subject.not.found");
+        }
+    }
+
+    private void validateSubject(Subject subject) {
+        if (subject.getCoursePercent() + subject.getSeminaryPercent() != 100) {
+            throw new BadRequestException("Subject scoring percent must be 100%", "subject.scoring.sum.invalid");
         }
     }
 }

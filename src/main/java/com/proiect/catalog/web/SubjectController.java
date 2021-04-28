@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -42,7 +43,7 @@ public class SubjectController {
     }
 
     @PostMapping(value = "")
-    public SubjectDto saveNewSubject(@RequestBody SubjectDto request) {
+    public SubjectDto saveNewSubject(@Valid @RequestBody SubjectDto request) {
         Subject subjectToBeSaved = subjectConverter.fromDtoToEntity(request);
         Subject savedSubject = subjectService.saveSubject(subjectToBeSaved);
 
@@ -51,7 +52,7 @@ public class SubjectController {
     }
 
     @PutMapping(value = "/{id}")
-    public SubjectDto updateSubject(@PathVariable Long id, @RequestBody  SubjectDto request) {
+    public SubjectDto updateSubject(@PathVariable Long id, @Valid @RequestBody  SubjectDto request) {
         Subject subject = subjectConverter.fromDtoToEntity(request);
         subject = subjectService.updateSubject(subject, id);
 

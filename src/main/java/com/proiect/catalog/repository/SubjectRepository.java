@@ -1,4 +1,4 @@
-package com.proiect.catalog.repository;
+package com.proiect.catalog.repository; //repository interfaces - help us execute SQL queries
 
 import com.proiect.catalog.model.Subject;
 import org.springframework.data.jpa.repository.JpaRepository;

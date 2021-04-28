@@ -1,39 +1,21 @@
 package com.proiect.catalog.web.dto;
 
 import java.time.LocalDate;
-import java.util.List;
 
-public class TeacherDto {
+//used when we need to send all the Teacher related information (e.g.: if we need to display them from Teacher's user profile page
+public class TeacherDto extends TeacherBasicInfoDto {
 
-    private Long id;
-    private String firstName;
-    private String lastName;
     private LocalDate birthDate;
     private LocalDate employmentDate;
-    private List<SubjectDto> subjects;
+    private String cnp;
+    private Long salary;
 
-    public Long getId() {
-        return id;
+    public String getCnp() {
+        return cnp;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setCnp(String cnp) {
+        this.cnp = cnp;
     }
 
     public LocalDate getBirthDate() {
@@ -52,11 +34,22 @@ public class TeacherDto {
         this.employmentDate = employmentDate;
     }
 
-    public List<SubjectDto> getSubjects() {
-        return subjects;
+    public Long getSalary() {
+        return salary;
     }
 
-    public void setSubjects(List<SubjectDto> subjects) {
-        this.subjects = subjects;
+    public void setSalary(Long salary) {
+        this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("TeacherDto{");
+        sb.append("birthDate=").append(birthDate);
+        sb.append(", employmentDate=").append(employmentDate);
+        sb.append(", cnp='").append(cnp).append('\'');
+        sb.append(", salary=").append(salary);
+        sb.append('}');
+        return sb.toString();
     }
 }

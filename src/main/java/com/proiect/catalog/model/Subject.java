@@ -1,5 +1,5 @@
-package com.proiect.catalog.model;
-
+package com.proiect.catalog.model;  //package containing all the entities (classes that are mapped to the db tables)
+                                    // for each model (table) you usually have: 1 model, 1 repository, 1 service, 1 controller, 1 dto
 import javax.persistence.*;
 
 @Entity

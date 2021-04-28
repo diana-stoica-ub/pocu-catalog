@@ -1,4 +1,4 @@
-package com.proiect.catalog.web;
+package com.proiect.catalog.web;            // controllers containing endpoints
 
 import com.proiect.catalog.converter.SubjectConverter;
 import com.proiect.catalog.model.Subject;

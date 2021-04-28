@@ -1,4 +1,4 @@
-package com.proiect.catalog.service;
+package com.proiect.catalog.service;    //most of the functionality; use repository and other services
 
 import com.proiect.catalog.exception.BadRequestException;
 import com.proiect.catalog.exception.NotFoundException;

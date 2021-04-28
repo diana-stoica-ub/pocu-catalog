@@ -1,4 +1,4 @@
-package com.proiect.catalog.web.dto;
+package com.proiect.catalog.web.dto;        //objects that are used as response body; what the FE application receives
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

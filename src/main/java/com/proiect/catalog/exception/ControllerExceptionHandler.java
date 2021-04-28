@@ -23,21 +23,19 @@ public class ControllerExceptionHandler {
     @ExceptionHandler({NotFoundException.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ErrorDto handleNotFound(HttpServletRequest request, Exception exception) {
-        BaseException baseException = (BaseException) exception;
-
-        logger.warn("Not found exception", exception);
-        return new ErrorDto(baseException.getErrorCode(),
-                baseException.getMessage(), HttpStatus.NOT_FOUND.value());
+        return handleBaseException(exception, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({BadRequestException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ErrorDto handleBadRequest(HttpServletRequest request, Exception exception) {
-        BaseException baseException = (BaseException) exception;
+        return handleBaseException(exception, HttpStatus.BAD_REQUEST);
+    }
 
-        logger.warn("Bad request exception", exception);
-        return new ErrorDto(baseException.getErrorCode(),
-                baseException.getMessage(), HttpStatus.BAD_REQUEST.value());
+    @ExceptionHandler({MethodNotSupportedException.class})
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorDto handleMethodNotSupported(HttpServletRequest request, Exception exception) {
+        return handleBaseException(exception, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
@@ -60,5 +58,13 @@ public class ControllerExceptionHandler {
         logger.error("An error occurred", exception);
         return new ErrorDto("internal.server.error", "An error occurred",
                 HttpStatus.INTERNAL_SERVER_ERROR.value());
+    }
+
+    private ErrorDto handleBaseException(Exception exception, HttpStatus status) {
+        BaseException baseException = (BaseException) exception;
+
+        logger.warn(exception.getMessage(), exception);
+        return new ErrorDto(baseException.getErrorCode(),
+                baseException.getMessage(), status.value());
     }
 }

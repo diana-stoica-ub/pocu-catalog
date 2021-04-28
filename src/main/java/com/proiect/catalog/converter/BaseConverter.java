@@ -1,14 +1,14 @@
 package com.proiect.catalog.converter;
 
-import com.proiect.catalog.model.Subject;
-import com.proiect.catalog.web.dto.SubjectDto;
+import com.proiect.catalog.model.BaseEntity;
+import com.proiect.catalog.web.dto.BaseDto;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class BaseConverter<D, E> {
+public abstract class BaseConverter<D extends BaseDto, E extends BaseEntity> {     //generic converter class
 
     public abstract D fromEntityToDto(E entity);
 

@@ -1,5 +1,6 @@
 package com.proiect.catalog.converter;
 
+import com.proiect.catalog.exception.MethodNotSupportedException;
 import com.proiect.catalog.model.Teacher;
 import com.proiect.catalog.web.dto.TeacherBasicInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class TeacherBasicInfoConverter {
+public class TeacherBasicInfoConverter extends BaseConverter<TeacherBasicInfoDto, Teacher>{
 
     private final SubjectConverter subjectConverter;
 
@@ -18,6 +19,7 @@ public class TeacherBasicInfoConverter {
         this.subjectConverter = subjectConverter;
     }
 
+    @Override
     public TeacherBasicInfoDto fromEntityToDto(Teacher teacher) {
         TeacherBasicInfoDto dto = new TeacherBasicInfoDto();
         dto.setId(teacher.getId());
@@ -28,10 +30,8 @@ public class TeacherBasicInfoConverter {
         return dto;
     }
 
-    public List<TeacherBasicInfoDto> fromEntitiesToDtos(List<Teacher> entities) {
-        return entities
-                .stream()
-                .map(this::fromEntityToDto)
-                .collect(Collectors.toList());
+    @Override
+    public Teacher fromDtoToEntity(TeacherBasicInfoDto dto) {
+        throw new MethodNotSupportedException("Method not supported", "method.not.supported");
     }
 }

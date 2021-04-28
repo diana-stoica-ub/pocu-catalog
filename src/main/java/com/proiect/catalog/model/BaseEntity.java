@@ -22,9 +22,7 @@ public abstract class BaseEntity {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("BaseEntity{");
-        sb.append("id=").append(id);
-        sb.append('}');
-        return sb.toString();
+        return "BaseEntity{" + "id=" + id +
+                '}';
     }
 }

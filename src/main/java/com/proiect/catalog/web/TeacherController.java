@@ -66,8 +66,16 @@ public class TeacherController {
     }
 
     @GetMapping(value = "/basic")
-    public List<TeacherBasicInfoDto> getAllBasicInfo() {
-        List<Teacher> allTeachers = teacherService.getAllTeachers();
+    public List<TeacherBasicInfoDto> getAllBasicInfo(@RequestParam(name = "page", required = false) Integer page,
+                                                     @RequestParam(name = "size", required = false) Integer size) {
+        //find with pagination
+        List<Teacher> allTeachers;
+
+        if (page != null && size != null) {
+            allTeachers = teacherService.getAllTeachers(page, size);
+        } else {
+            allTeachers = teacherService.getAllTeachers();
+        }
 
         return teacherBasicInfoConverter.fromEntitiesToDtos(allTeachers);
     }

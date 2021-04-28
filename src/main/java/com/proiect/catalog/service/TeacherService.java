@@ -5,12 +5,11 @@ import com.proiect.catalog.model.Subject;
 import com.proiect.catalog.model.Teacher;
 import com.proiect.catalog.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.awt.print.Pageable;
+import java.util.*;
 
 @Service            //this annotation means that this class is a Bean
 public class TeacherService {
@@ -26,7 +25,10 @@ public class TeacherService {
     }
 
     public List<Teacher> getAllTeachers() {
-        return teacherRepository.findAll();
+        List<Teacher> teachers = new ArrayList<>();
+        teacherRepository.findAll().forEach(teachers::add);
+
+        return teachers;
     }
 
     public List<Teacher> getAllTeachersByCnp(String cnp) {
@@ -79,5 +81,12 @@ public class TeacherService {
         } else {
             throw new NotFoundException("Teacher not found", "teacher.not.found");
         }
+    }
+
+    public List<Teacher> getAllTeachers(Integer page, Integer size) {
+        //find all using pagination; it retrieves page number 'page' if we split the result in chunks of 'size' length
+        //page number starts from 0
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return teacherRepository.findAll(pageRequest).getContent();
     }
 }

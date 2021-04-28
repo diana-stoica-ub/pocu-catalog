@@ -1,7 +1,5 @@
 package com.proiect.catalog.web.dto;
 
-import org.springframework.lang.NonNull;
-
 public class SubjectScoringDto {
 
     private Integer coursePercent;

@@ -5,19 +5,10 @@ import com.proiect.catalog.web.dto.SubjectDto;
 import com.proiect.catalog.web.dto.SubjectScoringDto;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
-public class SubjectConverter {
+public class SubjectConverter extends BaseConverter<SubjectDto, Subject> {
 
-    public List<SubjectDto> fromEntitiesToDtos(List<Subject> entities) {
-        return entities
-                .stream()
-                .map(this::fromEntityToDto)
-                .collect(Collectors.toList());
-    }
-
+    @Override
     public SubjectDto fromEntityToDto(Subject entity) {
         SubjectDto subjectDto = new SubjectDto();
         subjectDto.setId(entity.getId());
@@ -30,13 +21,7 @@ public class SubjectConverter {
         return subjectDto;
     }
 
-    public List<Subject> fromDtosToEntities(List<SubjectDto> dtos) {
-        return dtos
-                .stream()
-                .map(this::fromDtoToEntity)
-                .collect(Collectors.toList());
-    }
-
+    @Override
     public Subject fromDtoToEntity(SubjectDto dto) {
         Subject entity = new Subject();
         entity.setName(dto.getName());

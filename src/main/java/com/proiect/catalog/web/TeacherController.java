@@ -8,10 +8,9 @@ import com.proiect.catalog.web.dto.TeacherBasicInfoDto;
 import com.proiect.catalog.web.dto.TeacherDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController         //this annotation means that this class will be a Bean (managed by spring) and will contain endpoints (an endpoint is a method that handles HTTP requests end returns a HTTP response)
@@ -36,9 +35,32 @@ public class TeacherController {
     }
 
 
+    @GetMapping(value = "/{id}")
+    public TeacherDto getTeacher(@PathVariable(name = "id") Long id) {
+        Teacher teacher = teacherService.getTeacher(id);
+
+        return teacherConverter.fromEntityToDto(teacher);
+    }
+
+    @GetMapping(value = "/{id}/basic")
+    public TeacherBasicInfoDto getTeacherBasicInfo(@PathVariable(name = "id") Long id) {
+        Teacher teacher = teacherService.getTeacher(id);
+
+        return teacherBasicInfoConverter.fromEntityToDto(teacher);
+    }
+
     @GetMapping(value = "")
-    public List<TeacherDto> getAll() {
-        List<Teacher> allTeachers = teacherService.getAllTeachers();
+    public List<TeacherDto> getAll(@RequestParam(name = "cnp", required = false) String cnp,
+                                   @RequestParam(name = "firstName", required = false) String firstName,
+                                   @RequestParam(name = "lastName", required = false) String lastName) {
+        List<Teacher> allTeachers;
+        if (cnp != null) {
+            allTeachers = teacherService.getAllTeachersByCnp(cnp);
+        }  else if (firstName != null && lastName != null) {
+            allTeachers = teacherService.getAllTeachersByName(firstName, lastName);
+        } else {
+            allTeachers = teacherService.getAllTeachers();
+        }
 
         return teacherConverter.fromEntitiesToDtos(allTeachers);
     }
@@ -48,6 +70,37 @@ public class TeacherController {
         List<Teacher> allTeachers = teacherService.getAllTeachers();
 
         return teacherBasicInfoConverter.fromEntitiesToDtos(allTeachers);
+    }
+
+    @PostMapping(value = "")
+    public TeacherDto saveTeacher(@Valid @RequestBody TeacherDto teacherDto) {
+        Teacher teacher = teacherConverter.fromDtoToEntity(teacherDto);
+        teacher = teacherService.saveTeacher(teacher);
+
+        return teacherConverter.fromEntityToDto(teacher);
+    }
+
+    @PutMapping(value = "/{id}")
+    public TeacherDto updateTeacher(@PathVariable(name = "id") Long id,
+                                    @Valid @RequestBody TeacherDto teacherDto) {
+        Teacher teacher = teacherConverter.fromDtoToEntity(teacherDto);
+        teacher = teacherService.updateTeacher(id, teacher);
+
+        return teacherConverter.fromEntityToDto(teacher);
+    }
+
+    @PutMapping(value = "/{teacherId}/subject/{subjectId}")
+    public TeacherDto assignSubjectToTeacher(@PathVariable(name = "teacherId") Long teacherId,
+                                             @PathVariable(name= "subjectId") Long subjectId) {
+
+        Teacher teacher = teacherService.assignSubjectToTeacher(teacherId, subjectId);
+
+        return teacherConverter.fromEntityToDto(teacher);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteTeacher(@PathVariable(name = "id") Long id){
+        teacherService.deleteTeacher(id);
     }
 
 }

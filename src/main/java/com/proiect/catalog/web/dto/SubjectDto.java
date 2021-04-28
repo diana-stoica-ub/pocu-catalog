@@ -3,7 +3,7 @@ package com.proiect.catalog.web.dto;        //objects that are used as response 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class SubjectDto {
+public class SubjectDto extends BaseDto {
 
     //Other common validation annotations: @Min, @Max, @Pattern
 

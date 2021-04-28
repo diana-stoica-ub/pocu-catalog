@@ -6,4 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
+
+    void deleteByName(String name);
+
+    Long countByCreditPointsBetween(Integer creditPointsMin, Integer creditPointsMax);
+
 }

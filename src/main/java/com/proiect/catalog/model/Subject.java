@@ -4,11 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "subject")
-public class Subject {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Subject extends BaseEntity {
 
     @Column(name = "name")
     private String name;
@@ -26,14 +22,6 @@ public class Subject {
     private Integer seminaryPercent;
 
     //getters and setters & toString() - Alt + Insert for IntelliJ auto-generation
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -76,14 +64,12 @@ public class Subject {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Subject{");
-        sb.append("id=").append(id);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", creditPoints=").append(creditPoints);
-        sb.append(", isOptional=").append(isOptional);
-        sb.append(", coursePercent=").append(coursePercent);
-        sb.append(", seminaryPercent=").append(seminaryPercent);
-        sb.append('}');
-        return sb.toString();
+        return  "Subject{" + "id=" + getId() +
+                ", name='" + name + '\'' +
+                ", creditPoints=" + creditPoints +
+                ", isOptional=" + isOptional +
+                ", coursePercent=" + coursePercent +
+                ", seminaryPercent=" + seminaryPercent +
+                '}';
     }
 }

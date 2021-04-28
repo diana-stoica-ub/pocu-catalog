@@ -4,10 +4,6 @@ server:
   servlet:
     context-path: /catalog    #root of all endpoints
 
-#custom properties:
-
-test.value: RandomString      #custom defined property
-
 #database - see more: https://www.baeldung.com/spring-boot-h2-database
 spring:
   datasource:
@@ -25,3 +21,6 @@ spring:
     console:
       enabled: true
       path: /h2-console  #http://localhost:8081/catalog/h2-console
+
+#custom properties:
+insert.test.data: true

@@ -1,12 +1,15 @@
 package com.proiect.catalog.web.dto;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 //Contains only basic teacher related info (e.g.: to be used for Student's page - we don't need all the info there, just the basic info such as first name, last name
-public class TeacherBasicInfoDto {
+public class TeacherBasicInfoDto extends BaseDto {
 
     private Long id;
+    @NotNull(message = "firstName.cannot.be.empty")
     private String firstName;
+    @NotNull(message = "lastName.cannot.be.empty")
     private String lastName;
     private List<SubjectDto> subjects;
 

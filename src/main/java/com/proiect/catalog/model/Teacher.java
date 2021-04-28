@@ -2,15 +2,12 @@ package com.proiect.catalog.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "teacher")
-public class Teacher {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Teacher extends BaseEntity {
 
     @Column(name = "first_name")
     private String firstName;
@@ -34,14 +31,6 @@ public class Teacher {
     @JoinColumn(name = "teacher_id")
     private List<Subject> subjects;
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getSalary() {
         return salary;
@@ -99,16 +88,24 @@ public class Teacher {
         this.subjects = subjects;
     }
 
+    public void setSubject(Subject subject) {
+        if (this.subjects == null) {
+            this.subjects = new ArrayList<>();
+        }
+        this.subjects.add(subject);
+    }
+
+
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Teacher{");
-        sb.append("id=").append(id);
-        sb.append(", firstName='").append(firstName).append('\'');
-        sb.append(", lastName='").append(lastName).append('\'');
-        sb.append(", employmentDate=").append(employmentDate);
-        sb.append(", birthDate=").append(birthDate);
-        sb.append(", subjects=").append(subjects);
-        sb.append('}');
-        return sb.toString();
+        return  "Teacher{" + "id='" + getId() + '\'' +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", cnp='" + cnp + '\'' +
+                ", employmentDate=" + employmentDate +
+                ", birthDate=" + birthDate +
+                ", salary=" + salary +
+                ", subjects=" + subjects +
+                '}';
     }
 }

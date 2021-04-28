@@ -5,11 +5,8 @@ import com.proiect.catalog.web.dto.TeacherDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
-public class TeacherConverter {
+public class TeacherConverter extends BaseConverter<TeacherDto, Teacher> {
 
     private final SubjectConverter subjectConverter;
 
@@ -18,6 +15,7 @@ public class TeacherConverter {
         this.subjectConverter = subjectConverter;
     }
 
+    @Override
     public TeacherDto fromEntityToDto(Teacher teacher) {
         TeacherDto teacherDto = new TeacherDto();
         teacherDto.setId(teacher.getId());
@@ -32,6 +30,7 @@ public class TeacherConverter {
         return teacherDto;
     }
 
+    @Override
     public Teacher fromDtoToEntity(TeacherDto dto) {
         Teacher teacher = new Teacher();
         teacher.setFirstName(dto.getFirstName());
@@ -42,19 +41,5 @@ public class TeacherConverter {
         teacher.setSalary(dto.getSalary());
 
         return teacher;
-    }
-
-    public List<TeacherDto> fromEntitiesToDtos(List<Teacher> entities) {
-        return entities
-                .stream()
-                .map(this::fromEntityToDto)
-                .collect(Collectors.toList());
-    }
-
-    public List<Teacher> fromDtosToEntities(List<TeacherDto> dtos) {
-        return dtos
-                .stream()
-                .map(this::fromDtoToEntity)
-                .collect(Collectors.toList());
     }
 }
